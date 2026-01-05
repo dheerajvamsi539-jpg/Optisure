@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api';
+const API_URL = '/api';
 
 // Policy APIs
 export const getPolicies = () => axios.get(`${API_URL}/policies`);

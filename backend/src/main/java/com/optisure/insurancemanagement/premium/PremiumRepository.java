@@ -1,6 +1,6 @@
-package com.optisure.insurancemanagement.repository;
+package com.optisure.insurancemanagement.premium;
 
-import com.optisure.insurancemanagement.model.Premium;
+import com.optisure.insurancemanagement.premium.Premium;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,13 +1,13 @@
 package com.optisure.insurancemanagement.policy;
 
-import com.optisure.insurancemanagement.model.Policy;
-import com.optisure.insurancemanagement.service.PolicyService;
+import com.optisure.insurancemanagement.policy.dto.PolicyDto;
+import com.optisure.insurancemanagement.policy.dto.PolicyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/policies")
@@ -16,36 +16,39 @@ public class PolicyController {
     @Autowired
     private PolicyService policyService;
 
+    @Autowired
+    private PolicyMapper policyMapper;
+
     @GetMapping
-    public List<Policy> getPolicies() {
-        return policyService.findAll();
+    public List<PolicyDto> getPolicies() {
+        return policyService.findAll().stream()
+                .map(policyMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Policy> getPolicyById(@PathVariable Long id) {
-        Optional<Policy> policy = policyService.findById(id);
-        return policy.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<PolicyDto> getPolicyById(@PathVariable Long id) {
+        return policyService.findById(id)
+                .map(policyMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Policy createPolicy(@RequestBody Policy policy) {
-        return policyService.save(policy);
+    public PolicyDto createPolicy(@RequestBody PolicyDto policyDto) {
+        Policy policy = policyMapper.toEntity(policyDto);
+        return policyMapper.toDto(policyService.save(policy));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Policy> updatePolicy(@PathVariable Long id, @RequestBody Policy policyDetails) {
-        Optional<Policy> optionalPolicy = policyService.findById(id);
-        if (optionalPolicy.isPresent()) {
-            Policy policy = optionalPolicy.get();
-            policy.setPolicyNumber(policyDetails.getPolicyNumber());
-            policy.setPolicyType(policyDetails.getPolicyType());
-            policy.setStartDate(policyDetails.getStartDate());
-            policy.setEndDate(policyDetails.getEndDate());
-            policy.setPremiumAmount(policyDetails.getPremiumAmount());
-            return ResponseEntity.ok(policyService.save(policy));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<PolicyDto> updatePolicy(@PathVariable Long id, @RequestBody PolicyDto policyDetails) {
+        return policyService.findById(id)
+                .map(existingPolicy -> {
+                    Policy policyToUpdate = policyMapper.toEntity(policyDetails);
+                    policyToUpdate.setId(existingPolicy.getId());
+                    return ResponseEntity.ok(policyMapper.toDto(policyService.save(policyToUpdate)));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

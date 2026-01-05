@@ -1,35 +1,56 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '4.0.0'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.optisure'
 version = '0.0.1-SNAPSHOT'
-description = 'OptiSure Insurance Management Platform'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    sourceCompatibility = '17'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
-	runtimeOnly 'org.postgresql:postgresql'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // Core Spring Boot starters for web, data, security, and monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // OpenAPI documentation for Spring WebMVC
+    // Downgraded to a known stable version compatible with Spring Boot 3.2.x
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+    // MapStruct for DTO mapping
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+
+    // Development-time tools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Database Drivers
+    runtimeOnly 'org.postgresql:postgresql' // For production/development
+    implementation 'com.h2database:h2'      // For in-memory testing
+
+    // Testing dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
+// Configure JUnit 5 for testing
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
+}
+
+// Configure MapStruct annotation processor
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += [
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
 }

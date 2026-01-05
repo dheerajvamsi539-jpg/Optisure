@@ -1,24 +1,22 @@
-package com.optisure.insurancemanagement.model;
+package com.optisure.insurancemanagement.policy;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Policy {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String policyNumber;
     private String policyType;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private Double premiumAmount;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -43,19 +41,19 @@ public class Policy {
         this.policyType = policyType;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

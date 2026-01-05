@@ -1,24 +1,22 @@
-package com.optisure.insurancemanagement.model;
+package com.optisure.insurancemanagement.claim;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Claim {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String claimNumber;
     private String policyNumber;
-    private LocalDate claimDate;
+    private Date claimDate;
     private Double claimAmount;
     private String status;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -43,11 +41,11 @@ public class Claim {
         this.policyNumber = policyNumber;
     }
 
-    public LocalDate getClaimDate() {
+    public Date getClaimDate() {
         return claimDate;
     }
 
-    public void setClaimDate(LocalDate claimDate) {
+    public void setClaimDate(Date claimDate) {
         this.claimDate = claimDate;
     }
 

@@ -1,23 +1,20 @@
-package com.optisure.insurancemanagement.model;
+package com.optisure.insurancemanagement.premium;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Premium {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String policyNumber;
     private Double premiumAmount;
-    private LocalDate dueDate;
-    private LocalDate paymentDate;
-
-    // Getters and Setters
+    private Date dueDate;
+    private Date paymentDate;
 
     public Long getId() {
         return id;
@@ -43,19 +40,19 @@ public class Premium {
         this.premiumAmount = premiumAmount;
     }
 
-    public LocalDate getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
-    public LocalDate getPaymentDate() {
+    public Date getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(LocalDate paymentDate) {
+    public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
     }
 }

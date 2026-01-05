@@ -1,7 +1,7 @@
-package com.optisure.insurancemanagement.service;
+package com.optisure.insurancemanagement.premium;
 
-import com.optisure.insurancemanagement.model.Premium;
-import com.optisure.insurancemanagement.repository.PremiumRepository;
+import com.optisure.insurancemanagement.premium.Premium;
+import com.optisure.insurancemanagement.premium.PremiumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

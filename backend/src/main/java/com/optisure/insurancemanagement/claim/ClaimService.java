@@ -1,7 +1,7 @@
-package com.optisure.insurancemanagement.service;
+package com.optisure.insurancemanagement.claim;
 
-import com.optisure.insurancemanagement.model.Claim;
-import com.optisure.insurancemanagement.repository.ClaimRepository;
+import com.optisure.insurancemanagement.claim.Claim;
+import com.optisure.insurancemanagement.claim.ClaimRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
